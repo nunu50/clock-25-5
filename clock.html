@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background: black;
+            font-family: cursive;
+        }
+
+        h1 {
+            margin-top: 40px; 
+            color: antiquewhite;
+        }
+
+        .timer {
+            font-size: 48px;
+            margin-top: 20px;
+             border-radius: 20px;
+             background-color: grey;
+             color: antiquewhite;
+            border: 2px solid silver;
+        }
+
+        .buttons {
+            margin-top: 20px;
+        }
+
+        button {
+            font-size: 18px;
+            padding: 10px 20px;
+            margin: 0 10px;
+            border: none;
+            background: rgb(141, 123, 123);
+            border-radius: 20px;
+            color: wheat;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>25+5 Clock</h1>
+    <div class="timer">25:00</div>
+    <div class="buttons">
+        <button onclick="startTimer()">Start</button>
+        <button onclick="pauseTimer()">Pause</button>
+        <button onclick="resetTimer()">Reset</button>
+    </div>
+
+    <script>
+        let countdown;
+        let timerDisplay = document.querySelector('.timer');
+        let minutes = 25;
+        let seconds = 0;
+        let isPaused = false;
+
+        function startTimer() {
+            if (!countdown) {
+                countdown = setInterval(updateTimer, 1000);
+            }
+            isPaused = false;
+        }
+
+        function pauseTimer() {
+            clearInterval(countdown);
+            countdown = null;
+            isPaused = true;
+        }
+
+        function resetTimer() {
+            clearInterval(countdown);
+            countdown = null;
+            isPaused = false;
+            minutes = 25;
+            seconds = 0;
+            updateTimer();
+        }
+
+        function updateTimer() {
+            if (!isPaused) {
+                seconds--;
+                if (seconds < 0) {
+                    if (minutes === 0) {
+                        clearInterval(countdown);
+                        countdown = null;
+                        alert('Time is up!');
+                        return;
+                    }
+                    minutes--;
+                    seconds = 59;
+                }
+            }
+
+            const displayMinutes = minutes < 10 ? '0' + minutes : minutes;
+            const displaySeconds = seconds < 10 ? '0' + seconds : seconds;
+            timerDisplay.textContent = displayMinutes + ':' + displaySeconds;
+        }
+    </script>
+</body>
+
+</html>
